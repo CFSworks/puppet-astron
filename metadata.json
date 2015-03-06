@@ -1,0 +1,14 @@
+{
+  "name": "cfsworks-astron",
+  "version": "0.1.0",
+  "author": "cfsworks",
+  "summary": "Manage the Astron object-oriented networking daemon with Puppet.",
+  "license": "Apache 2.0",
+  "source": "https://github.com/CFSworks/puppet-astron",
+  "project_page": "https://github.com/CFSworks/puppet-astron",
+  "issues_url": "https://github.com/CFSworks/puppet-astron/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
