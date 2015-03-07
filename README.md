@@ -6,7 +6,6 @@
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with astron](#setup)
     * [What astron affects](#what-astron-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with astron](#beginning-with-astron)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
@@ -15,41 +14,50 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+This module allows the configuration, and management of
+[Astron](https://github.com/Astron/Astron) through Puppet.
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+The puppet-astron module is currently being developed under Debian 8 only;
+while I'd love to see support for other operating systems, that is currently
+out of my scope because I don't have a need for it yet. PRs welcome!
 
 ## Setup
 
 ### What astron affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+* This module currently does not *install* the Astron package. Bring your own
+  `astrond`!
+* This module **will** create a service file for you and generally manage
+  everything else.
+* You will have to make sure that astrond is on the system PATH. I suggest
+  installing it into `/usr/local/bin`.
 
 ### Beginning with astron
 
-The very basic steps needed for a user to get the module up and running.
+Simply install this into your Puppet modules path and begin with an example
+like
+```
+include astron
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+astron::daemon { 'my_daemon':
+    ensure     => running,
+
+    bind_ip    => '127.0.0.1:7199',
+    connect_ip => 'upstream-server',
+
+    dcfiles    => ['/etc/astron/my_daemon/dc1.dc'],
+}
+
+astron::role::clientagent { 'ca1':
+    bind_ip     => '0.0.0.0:7198',
+    version     => 'my_cluster',
+
+    channel_min => 100100,
+    channel_max => 100999,
+}
+```
 
 ## Usage
 
@@ -65,15 +73,10 @@ with things. (We are working on automating this section!)
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+* This is Debian 8 only.
+* This will not install astrond. It *will* install a service unit. This will be
+  incompatible with a future official package.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+Pull requests are welcome at [GitHub](https://github.com/CFSworks/puppet-astron)!
