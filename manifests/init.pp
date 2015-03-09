@@ -36,6 +36,7 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 class astron {
-
-
+    file { "/etc/astron":
+        ensure => directory,
+    }
 }
