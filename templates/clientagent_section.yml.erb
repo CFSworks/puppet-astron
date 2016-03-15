@@ -1,0 +1,28 @@
+  - type: clientagent
+    <%- if @bind -%>
+    bind: <%= @bind %>
+    <%- end -%>
+    version: <%= @version %>
+    client:
+        type: <%= @client_type %>
+    channels:
+        max: <%= @channel_max %>
+        min: <%= @channel_min %>
+    <%- if @tls -%>
+    tls:
+        certificate: <%= @tls_certificate %>
+        key_file: <%= @tls_key %>
+        <%- if @tls_chain -%>
+        chain_file: <%= @tls_chain %>
+        <%- end -%>
+        <%- if @tls_authority -%>
+        cert_authority: <%= @tls_authority %>
+        <%- end -%>
+        <%- if @tls_verify_depth -%>
+        max_verify_depth: <%= @tls_verify_depth %>
+        <%- end -%>
+    <%- end -%>
+    <%- if defined? @tuning_interest_timeout -%>
+    tuning:
+        interest_timeout: <%= @tuning_interest_timeout %>
+    <%- end -%>
